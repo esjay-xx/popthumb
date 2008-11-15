@@ -7,7 +7,8 @@
     $.fn.popthumb = function(options) {
         
         var options = $.extend({
-            detailed_dir: 'detailed'
+            speed: 1000,
+            detailed_dir: 'detailed',
         }, options);
 
         // append popthumb img if it is not already exists
@@ -30,25 +31,21 @@
                     options.detailed_dir + '/' + img.attr('src'));
                 a_popthumb.attr('href', img.parent().attr('href'));
                 
-                var popWidth  = popthumb.width();
-                var popHeight = popthumb.height();
-                var imgWidth  = img.width();
-                var imgHeight = img.height();
-                
+                var popWidth = popthumb.width();
+                var coef = popWidth / popthumb.height();
+                var imgWidth = img.width();
                 popthumb.width(imgWidth);
-                popthumb.height(imgHeight);
-                
-                var curPopWidth  = popthumb.width();
-                var curPopHeight = popthumb.height();
-                
+                var curPopWidth = popthumb.width();
                 var position = img.position();
             
                 while (curPopWidth < popWidth) {
                     curPopWidth  += 2;
-                    curPopHeight += 2;
+                    if (curPopWidth > popWidth) {
+                        curPopWidth = popWidth;
+                    }
                     
                     popthumb.width(curPopWidth);
-                    popthumb.height(curPopHeight);
+                    popthumb.height(Math.round(curPopWidth / coef));
                     
                     position = {
                         left: (position.left - 1),
