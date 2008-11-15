@@ -32,35 +32,29 @@
                 a_popthumb.attr('href', img.parent().attr('href'));
                 
                 var popWidth = popthumb.width();
+                var popHeight = popthumb.height();
                 var coef = popWidth / popthumb.height();
                 var imgWidth = img.width();
+                var imgHeight = img.height();
                 popthumb.width(imgWidth);
-                var curPopWidth = popthumb.width();
+                popthumb.height(imgHeight);
                 var position = img.position();
-            
-                while (curPopWidth < popWidth) {
-                    curPopWidth  += 2;
-                    if (curPopWidth > popWidth) {
-                        curPopWidth = popWidth;
-                    }
-                    
-                    popthumb.width(curPopWidth);
-                    popthumb.height(Math.round(curPopWidth / coef));
-                    
-                    position = {
-                        left: (position.left - 1),
-                        top: (position.top   - 1)
-                    }
-                    
-                    popthumb.css({
-                        left: position.left + 'px',
-                        top: position.top   + 'px', 
-                    });
-                }
-
+                
+                popthumb.css({
+                    left: position.left + 'px',
+                    top: position.top   + 'px', 
+                });
+                
+                popthumb.animate({
+                   width: popWidth,
+                   height: popHeight,
+                   left: (position.left - (popWidth - imgWidth) / 2) + 'px',
+                   top: (position.top - (popHeight - imgHeight) / 2) + 'px'
+                }, options.speed);
+                
                 popthumb.show();
 
-               return false;
+                return false;
            });
         });
     }  
