@@ -7,9 +7,14 @@
     $.fn.popthumb = function(options) {
         
         var options = $.extend({
+            event: 'mouseover',
             speed: 1000,
             detailed_dir: 'detailed',
+            quickOut: false
         }, options);
+        
+        // current zoomed image
+        var cur_img = '';
 
         // append popthumb img if it is not already exists
         $("#i-body").append('<a href="#"><img id="popthumb" src="" alt="" /></a>');
@@ -21,21 +26,37 @@
         });
         
         popthumb.mouseout(function() {
-           popthumb.hide(); 
+            var speed = options.quickOut ? options.speed / 2 : options.speed;
+            var position = cur_img.position();
+            popthumb.animate({
+               width: cur_img.width(),
+               height: cur_img.height(),
+               left: position.left + 'px',
+               top: position.top   + 'px'
+            }, speed, 'linear', function() {
+               // popthumb.parent().remove();
+               popthumb.hide();
+               popthumb.css({
+                  width: '',
+                  height: '', 
+               });
+            });
         });
 
         return this.each(function() {
-           $(this).mouseover(function() {
-                var img = $(this);
+           var img = $(this);
+           img.bind(options.event, function() {
+                cur_img = img;
                 popthumb.attr('src', 
                     options.detailed_dir + '/' + img.attr('src'));
                 a_popthumb.attr('href', img.parent().attr('href'));
                 
                 var popWidth = popthumb.width();
                 var popHeight = popthumb.height();
-                var coef = popWidth / popthumb.height();
+                
                 var imgWidth = img.width();
                 var imgHeight = img.height();
+                
                 popthumb.width(imgWidth);
                 popthumb.height(imgHeight);
                 var position = img.position();
@@ -48,11 +69,9 @@
                 popthumb.animate({
                    width: popWidth,
                    height: popHeight,
-                   left: (position.left - (popWidth - imgWidth) / 2) + 'px',
-                   top: (position.top - (popHeight - imgHeight) / 2) + 'px'
+                   left: (Math.round(position.left - (popWidth - imgWidth) / 2)) + 'px',
+                   top: (Math.round(position.top - (popHeight - imgHeight) / 2)) + 'px'
                 }, options.speed);
-                
-                popthumb.show();
 
                 return false;
            });
