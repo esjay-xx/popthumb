@@ -20,9 +20,9 @@
            display: 'block' 
         });
         
-        // popthumb.mouseout(function() {
-        //    popthumb.hide(); 
-        // });
+        popthumb.mouseout(function() {
+           popthumb.hide(); 
+        });
 
         return this.each(function() {
            $(this).mouseover(function() {
