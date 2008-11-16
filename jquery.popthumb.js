@@ -15,18 +15,6 @@
         
         // current zoomed image
         var cur_img = '';
-        
-        $.fn.stopAndHide = function() {
-            return this.each(function() {
-                var popthumb = $(this);
-                popthumb.stop();
-                popthumb.hide();
-                popthumb.css({
-                  width: '',
-                  height: ''
-                });
-            });
-        }
 
         // append popthumb img if it is not already exists
         $("body").append('<a href="#"><img id="popthumb" src="" alt="" /></a>');
@@ -36,6 +24,15 @@
            position: 'absolute',
            display: 'block' 
         });
+        
+        popthumb.stopAndHide = function() {
+            this.stop();
+            this.hide();
+            this.css({
+                width: '',
+                height: ''
+            });  
+        };
         
         popthumb.mouseout(function() {
             var speed = options.quickOut ? options.speed / 2 : options.speed;
