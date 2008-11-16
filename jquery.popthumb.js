@@ -31,17 +31,18 @@
             this.css({
                 width:  '',
                 height: ''
-            });  
+            });
         };
         
         popthumb.mouseout(function() {
+            popthumb.stopAndHide();
             var speed = options.quickOut ? options.speed / 2 : options.speed;
             var position = curImg.position();
             popthumb.animate({
-               width: curImg.width(),
-               height: curImg.height(),
-               left: position.left + 'px',
-               top: position.top   + 'px'
+                width:  curImg.width(),
+                height: curImg.height(),
+                left: position.left + 'px',
+                top:  position.top  + 'px'
             }, speed, 'linear', function() {
                 popthumb.stopAndHide();
             });
@@ -57,13 +58,13 @@
                 
                 popthumb.attr('src', 
                     options.detailed_dir + '/' + img.attr('src'));
-                popthumb.attr('alt', parent.attr('alt'));
+                popthumb.attr('alt',    parent.attr('alt'));
                 a_popthumb.attr('href', parent.attr('href'));
                 
-                var popWidth = popthumb.width();
+                var popWidth  = popthumb.width();
                 var popHeight = popthumb.height();
                 
-                var imgWidth = img.width();
+                var imgWidth  = img.width();
                 var imgHeight = img.height();
                 
                 popthumb.width(imgWidth);
@@ -76,10 +77,10 @@
                 });
                 
                 popthumb.animate({
-                   width: popWidth,
+                   width:  popWidth,
                    height: popHeight,
-                   left: (Math.round(position.left - (popWidth - imgWidth) / 2)) + 'px',
-                   top: (Math.round(position.top - (popHeight - imgHeight) / 2)) + 'px'
+                   left: (Math.round(position.left - (popWidth  - imgWidth)  / 2)) + 'px',
+                   top:  (Math.round(position.top  - (popHeight - imgHeight) / 2)) + 'px'
                 }, options.speed);
 
                 return false;
