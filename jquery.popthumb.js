@@ -11,10 +11,22 @@
             speed: 1000,
             detailed_dir: 'detailed',
             quickOut: false
-        }, options);
+        }, options || {});
         
         // current zoomed image
         var cur_img = '';
+        
+        $.fn.stopAndHide = function() {
+            return this.each(function() {
+                var popthumb = $(this);
+                popthumb.stop();
+                popthumb.hide();
+                popthumb.css({
+                  width: '',
+                  height: ''
+                });
+            });
+        }
 
         // append popthumb img if it is not already exists
         $("body").append('<a href="#"><img id="popthumb" src="" alt="" /></a>');
@@ -34,26 +46,18 @@
                left: position.left + 'px',
                top: position.top   + 'px'
             }, speed, 'linear', function() {
-                popthumb.stop();
-                popthumb.hide();
-                popthumb.css({
-                  width: '',
-                  height: '', 
-                });
+                popthumb.stopAndHide();
             });
         });
 
         return this.each(function() {
            var img = $(this);
            img.bind(options.event, function() {
-               popthumb.stop();
-               popthumb.hide();
-               popthumb.css({
-                 width: '',
-                 height: '', 
-               });
+                popthumb.stopAndHide();
+                
                 var parent = img.parent(); 
                 cur_img = img;
+                
                 popthumb.attr('src', 
                     options.detailed_dir + '/' + img.attr('src'));
                 popthumb.attr('alt', parent.attr('alt'));
