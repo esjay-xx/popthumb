@@ -1,5 +1,5 @@
 // 
-// Pop Thumb $ plugin - displayes zoomed image thumb
+// Pop Thumb jQuery plugin - displayes zoomed image thumb
 // (c) 2008 Dmitry Afanasiev
 // 
 
@@ -14,7 +14,7 @@
         }, options || {});
         
         // current zoomed image
-        var cur_img = '';
+        var curImg = '';
 
         // append popthumb img if it is not already exists
         $("body").append('<a href="#"><img id="popthumb" src="" alt="" /></a>');
@@ -22,24 +22,24 @@
         var a_popthumb = popthumb.parent();
         popthumb.css({
            position: 'absolute',
-           display: 'block' 
+           display:  'block' 
         });
         
         popthumb.stopAndHide = function() {
             this.stop();
             this.hide();
             this.css({
-                width: '',
+                width:  '',
                 height: ''
             });  
         };
         
         popthumb.mouseout(function() {
             var speed = options.quickOut ? options.speed / 2 : options.speed;
-            var position = cur_img.position();
+            var position = curImg.position();
             popthumb.animate({
-               width: cur_img.width(),
-               height: cur_img.height(),
+               width: curImg.width(),
+               height: curImg.height(),
                left: position.left + 'px',
                top: position.top   + 'px'
             }, speed, 'linear', function() {
@@ -53,7 +53,7 @@
                 popthumb.stopAndHide();
                 
                 var parent = img.parent(); 
-                cur_img = img;
+                curImg = img;
                 
                 popthumb.attr('src', 
                     options.detailed_dir + '/' + img.attr('src'));
@@ -72,7 +72,7 @@
                 
                 popthumb.css({
                     left: position.left + 'px',
-                    top: position.top   + 'px', 
+                    top:  position.top  + 'px' 
                 });
                 
                 popthumb.animate({
