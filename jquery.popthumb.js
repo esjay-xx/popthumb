@@ -18,14 +18,14 @@
 
         // append popthumb img if it is not already exists
         $("body").append('<a href="#"><img id="popthumb" src="" alt="" /></a>');
-        var popthumb = $("#popthumb");
-        var a_popthumb = popthumb.parent();
-        popthumb.css({
+        var popThumb = $("#popthumb");
+        var aPopThumb = popThumb.parent();
+        popThumb.css({
            position: 'absolute',
            display:  'block' 
         });
         
-        popthumb.stopAndHide = function() {
+        popThumb.stopAndHide = function() {
             this.stop();
             this.hide();
             this.css({
@@ -34,49 +34,49 @@
             });
         };
         
-        popthumb.mouseout(function() {
-            popthumb.stopAndHide();
+        popThumb.mouseout(function() {
+            popThumb.stop();
             var speed = options.quickOut ? options.speed / 2 : options.speed;
             var position = curImg.position();
-            popthumb.animate({
+            popThumb.animate({
                 width:  curImg.width(),
                 height: curImg.height(),
                 left: position.left + 'px',
                 top:  position.top  + 'px'
             }, speed, 'linear', function() {
-                popthumb.stopAndHide();
+                popThumb.stopAndHide();
             });
         });
 
         return this.each(function() {
            var img = $(this);
            img.bind(options.event, function() {
-                popthumb.stopAndHide();
+                popThumb.stopAndHide();
                 
                 var parent = img.parent(); 
                 curImg = img;
                 
-                popthumb.attr('src', 
+                popThumb.attr('src', 
                     options.detailed_dir + '/' + img.attr('src'));
-                popthumb.attr('alt',    parent.attr('alt'));
-                a_popthumb.attr('href', parent.attr('href'));
+                popThumb.attr('alt',   parent.attr('alt'));
+                aPopThumb.attr('href', parent.attr('href'));
                 
-                var popWidth  = popthumb.width();
-                var popHeight = popthumb.height();
+                var popWidth  = popThumb.width();
+                var popHeight = popThumb.height();
                 
                 var imgWidth  = img.width();
                 var imgHeight = img.height();
                 
-                popthumb.width(imgWidth);
-                popthumb.height(imgHeight);
+                popThumb.width(imgWidth);
+                popThumb.height(imgHeight);
                 var position = img.position();
                 
-                popthumb.css({
+                popThumb.css({
                     left: position.left + 'px',
                     top:  position.top  + 'px' 
                 });
                 
-                popthumb.animate({
+                popThumb.animate({
                    width:  popWidth,
                    height: popHeight,
                    left: (Math.round(position.left - (popWidth  - imgWidth)  / 2)) + 'px',
