@@ -1,2 +1,4 @@
-1) Soft hide
-2) Append not to hard coded id but to boyd or document selector
+1) Soft hide +
+2) Append not to hard coded id but to boyd or document selector +
+3) Bug when hover the thumb when the animation is going +
+4) Вынести скрытие popthumb в отдельный метод

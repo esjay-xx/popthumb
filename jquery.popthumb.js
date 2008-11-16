@@ -17,7 +17,7 @@
         var cur_img = '';
 
         // append popthumb img if it is not already exists
-        $("#i-body").append('<a href="#"><img id="popthumb" src="" alt="" /></a>');
+        $("body").append('<a href="#"><img id="popthumb" src="" alt="" /></a>');
         var popthumb = $("#popthumb");
         var a_popthumb = popthumb.parent();
         popthumb.css({
@@ -34,22 +34,30 @@
                left: position.left + 'px',
                top: position.top   + 'px'
             }, speed, 'linear', function() {
-               // popthumb.parent().remove();
-               popthumb.hide();
-               popthumb.css({
+                popthumb.stop();
+                popthumb.hide();
+                popthumb.css({
                   width: '',
                   height: '', 
-               });
+                });
             });
         });
 
         return this.each(function() {
            var img = $(this);
            img.bind(options.event, function() {
+               popthumb.stop();
+               popthumb.hide();
+               popthumb.css({
+                 width: '',
+                 height: '', 
+               });
+                var parent = img.parent(); 
                 cur_img = img;
                 popthumb.attr('src', 
                     options.detailed_dir + '/' + img.attr('src'));
-                a_popthumb.attr('href', img.parent().attr('href'));
+                popthumb.attr('alt', parent.attr('alt'));
+                a_popthumb.attr('href', parent.attr('href'));
                 
                 var popWidth = popthumb.width();
                 var popHeight = popthumb.height();
